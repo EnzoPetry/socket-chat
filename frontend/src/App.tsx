@@ -1,25 +1,24 @@
-import { io } from "socket.io-client";
-import { Route, Routes } from "react-router-dom";
 import Entrar from "./components/Entrar";
 import Chat from "./components/Chat";
 import { useState } from "react";
 
-const socket = io("http://localhost:3000");
-
 function App() {
   const [logado, setLogado] = useState(false);
-
-  const Logar = () => {};
+  const [usuario, setUsuario] = useState("");
+  const handleLogin = (usuario: string) => {
+    setUsuario(usuario);
+    setLogado(true);
+  };
   if (!logado) {
     return (
       <div>
-        <Entrar />
+        <Entrar onSubmit={handleLogin} />
       </div>
     );
   } else {
     return (
       <div>
-        <Chat />
+        <Chat usuario={usuario} />
       </div>
     );
   }

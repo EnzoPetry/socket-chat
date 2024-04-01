@@ -5,18 +5,21 @@ const server = http.createServer(app);
 
 const io = require("socket.io")(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: "*",
   },
 });
 io.on("connection", (socket) => {
-  console.log("New user connected", socket.id);
 
-  socket.on("sendMessage", (message) => {
-    io.emit("message", message); // Broadcast the message to all connected clients
+  socket.on("sendUsuario", (usuario) =>{
+    socket.usuario = usuario;
+  })
+  socket.on("sendMessage", (mensagem) => {
+    console.log(mensagem);
+    io.emit("mensagem", mensagem);
   });
 
   socket.on("disconnect", () => {
-    console.log("User disconnected", socket.id);
+    console.log(socket.usuario, " se desconectou");
   });
 });
 
