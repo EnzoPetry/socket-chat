@@ -14,4 +14,4 @@ services:
       context: "./frontend"
       dockerfile: Dockerfile
     ports:
-      - 5173:3001
+      - 5173:5173
