@@ -8,16 +8,17 @@ const io = require("socket.io")(server, {
     origin: "*",
   },
 });
+let mensagens = [];
 io.on("connection", (socket) => {
-
-  socket.on("sendUsuario", (usuario) =>{
+  socket.on("sendUsuario", (usuario) => {
     socket.usuario = usuario;
-  })
+    io.emit("mensagens", mensagens);
+    console.log(socket.usuario, " se conectou");
+  });
   socket.on("sendMessage", (mensagem) => {
-    console.log(mensagem);
+    mensagens.push(mensagem);
     io.emit("mensagem", mensagem);
   });
-
   socket.on("disconnect", () => {
     console.log(socket.usuario, " se desconectou");
   });

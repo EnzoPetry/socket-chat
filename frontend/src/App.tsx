@@ -2,25 +2,18 @@ import Entrar from "./components/Entrar";
 import Chat from "./components/Chat";
 import { useState } from "react";
 
-function App() {
-  const [logado, setLogado] = useState(false);
-  const [usuario, setUsuario] = useState("");
-  const handleLogin = (usuario: string) => {
+const App: React.FC = () => {
+  const [logado, setLogado] = useState<boolean>(false);
+  const [usuario, setUsuario] = useState<string>("");
+  const handleLogin = (usuario: string): void => {
     setUsuario(usuario);
     setLogado(true);
   };
-  if (!logado) {
-    return (
-      <div>
-        <Entrar onSubmit={handleLogin} />
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <Chat usuario={usuario} />
-      </div>
-    );
-  }
+  return (
+    <div>
+      {logado ? (<Chat usuario={usuario} />) : (<Entrar onSubmit={handleLogin} />)}
+    </div>
+
+  );
 }
 export default App;
