@@ -1,6 +1,13 @@
 import React, { useState } from "react";
-import { io } from "socket.io-client";
-const socket = io("http://localhost:3001")
+import { Socket, io } from "socket.io-client";
+
+let socket: Socket;
+
+try {
+  socket = io("http://localhost:3001");
+} catch (error) {
+  console.error("Erro ao conectar ao servidor:", error);
+}
 
 
 interface EntrarProps {
@@ -12,8 +19,16 @@ const Entrar: React.FC<EntrarProps> = ({ onSubmit }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    socket.emit("sendUsuario", usuario);
-    onSubmit(usuario);
+    try {
+      if (socket) {
+        socket.emit("sendUsuario", usuario);
+      } else {
+        throw new Error("Socket não está conectado.");
+      }
+      onSubmit(usuario);
+    } catch (error) {
+      console.error("Erro ao enviar nome de usuário:", error);
+    }
   };
 
   return (

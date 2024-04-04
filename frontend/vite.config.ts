@@ -9,8 +9,5 @@ export default defineConfig({
     host: true,
     port: 5173, // Port used by docker container
     strictPort: true,
-    watch: {
-      usePolling: true,
-    },
   },
 });

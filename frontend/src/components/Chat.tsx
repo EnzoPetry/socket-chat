@@ -1,8 +1,14 @@
 import React, { FC, ReactElement, useEffect, useRef, useState } from "react";
-import { io } from "socket.io-client";
+import { Socket, io } from "socket.io-client";
 import Mensagem from "./Mensagem";
 
-const socket = io("http://localhost:3001")
+let socket: Socket;
+
+try {
+  socket = io("http://localhost:3001");
+} catch (error) {
+  console.error("Erro ao conectar ao servidor:", error);
+}
 
 interface Mensagem {
   usuario: string;
@@ -20,21 +26,33 @@ const Chat: FC<Usuario> = ({ usuario }) => {
   const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    socket.on("mensagem", (mensagem: Mensagem) => {
-      setMensagens([...mensagens, mensagem]);
-    });
-    socket.on("mensagens", (mensagensRecebidas: Mensagem[]) => {
-      setMensagens(mensagensRecebidas);
-    });
-    scrollToBottom();
+    try {
+      socket.on("mensagem", (mensagem: Mensagem) => {
+        setMensagens([...mensagens, mensagem]);
+      });
+      socket.on("mensagens", (mensagensRecebidas: Mensagem[]) => {
+        setMensagens(mensagensRecebidas);
+      });
+      scrollToBottom();
+    } catch (error) {
+      console.error("Erro ao configurar eventos de socket:", error);
+    }
   }, [mensagens]);
   const sendMessage = () => {
-    socket.emit("sendMessage", { usuario, id: socket.id, texto: textoMensagem, });
-    setTextoMensagem("");
+    try {
+      socket.emit("sendMessage", { usuario, id: socket.id, texto: textoMensagem, });
+      setTextoMensagem("");
+    } catch (error) {
+      console.error("Erro ao enviar mensagem:", error);
+    }
   }
   const scrollToBottom = () => {
-    if (chatRef.current) {
-      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    try {
+      if (chatRef.current) {
+        chatRef.current.scrollTop = chatRef.current.scrollHeight;
+      }
+    } catch (error) {
+      console.error("Erro ao rolar para o final:", error);
     }
   };
   return (
