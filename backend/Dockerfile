@@ -1,7 +1,6 @@
 FROM node
 WORKDIR /backend
-COPY . /backend
-RUN npm i
+COPY . .
+RUN npm install
 EXPOSE 3001
-
 CMD [ "npm", "run","dev" ]
