@@ -11,17 +11,16 @@ Antes de iniciar, certifique-se de ter os seguintes requisitos:
 - Sistema Operacional ou WSL 2 instalado
 - Docker instalado
 
-## Instalação do Socket Chat
-
 Para instalar e executar o **Socket Chat**, siga as instruções abaixo:
 
 1. Abra o Terminal WSL2.
 
-2. Execute o seguinte comando para iniciar os contêineres Docker:
+2. Execute os seguintes comandos para clonar o repositório e iniciar os contêineres Docker:
 
    ```bash
+   git clone https://github.com/EnzoPetry/socket-chat.git
+   cd socket-chat
    sudo docker compose up
-   ```
 
 ## Utilizando o Socket Chat
 
