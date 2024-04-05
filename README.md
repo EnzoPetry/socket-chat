@@ -8,7 +8,7 @@ Este projeto foi desenvolvido como parte da disciplina de "Sistemas Distribuído
 
 Antes de iniciar, certifique-se de ter os seguintes requisitos:
 
-- Sistema Operacional ou WSL 2 instalado
+- Sistema Operacional Linux ou WSL 2 instalado
 - Docker instalado
 
 Para instalar e executar o **Socket Chat**, siga as instruções abaixo:
